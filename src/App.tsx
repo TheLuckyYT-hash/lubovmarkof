@@ -252,9 +252,6 @@ function App() {
         return (
           <div className="flex flex-col items-center justify-center h-full px-4 text-center">
             <span className="text-8xl animate-pulse">❤️</span>
-            <h2 className="text-3xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-600 mt-8">
-              Ульяна, я тебя очень люблю
-            </h2>
             <p className="text-xl md:text-2xl text-gray-600 mt-6 leading-relaxed max-w-lg">
               Ты — лучшее, что случилось в моей жизни. Спасибо, что ты есть.
               Спасибо за каждый момент, за каждую улыбку, за каждое «я рядом».
