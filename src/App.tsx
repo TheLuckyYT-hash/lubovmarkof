@@ -34,11 +34,9 @@ function App() {
   const [isAnimating, setIsAnimating] = useState(false)
   const [clickHearts, setClickHearts] = useState<Heart[]>([])
   const [openCards, setOpenCards] = useState<Set<number>>(new Set())
-  const [hugs, setHugs] = useState(0)
-  const [showConfetti, setShowConfetti] = useState(false)
   const [loveMeter, setLoveMeter] = useState(0)
 
-  const totalSlides = 6
+  const totalSlides = 5
 
   const heartEmojis = ['💖', '💕', '💗', '💝', '💘', '❤️', '🩷', '🤍', '💜', '🌸']
 
@@ -86,14 +84,8 @@ function App() {
     })
   }
 
-  const giveHug = () => {
-    setHugs((prev) => prev + 1)
-    setShowConfetti(true)
-    setTimeout(() => setShowConfetti(false), 2000)
-  }
-
   const addLove = () => {
-    setLoveMeter((prev) => Math.min(prev + 10, 100))
+    setLoveMeter((prev) => prev + 10)
   }
 
   // Keyboard navigation
@@ -204,12 +196,22 @@ function App() {
                 <div className="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
                   <div
                     className="h-full bg-gradient-to-r from-pink-400 to-rose-500 rounded-full transition-all duration-500 ease-out"
-                    style={{ width: `${loveMeter}%` }}
+                    style={{ width: `${Math.min(loveMeter, 100)}%` }}
                   />
                 </div>
-                {loveMeter >= 100 && (
+                {loveMeter >= 100 && loveMeter < 200 && (
                   <p className="text-pink-500 font-bold mt-2 animate-bounce">
-                    МАКСИМУМ! Я НЕ МОГУ БЕЗ ТЕБЯ! 💖
+                    Очень скучаю, любимая 💖
+                  </p>
+                )}
+                {loveMeter >= 200 && loveMeter < 500 && (
+                  <p className="text-rose-500 font-bold mt-2 animate-pulse">
+                    Очень скучаю, любимая! Уровень тоски зашкаливает! 🥺💕
+                  </p>
+                )}
+                {loveMeter >= 500 && (
+                  <p className="text-purple-600 font-bold mt-2 animate-bounce">
+                    БЕСКОНЕЧНО СКУЧАЮ, ЛЮБИМАЯ! 💖✨🌟
                   </p>
                 )}
               </div>
@@ -247,57 +249,6 @@ function App() {
         )
 
       case 4:
-        return (
-          <div className="flex flex-col items-center justify-center h-full px-4 text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-pink-600 mb-6">
-              🫂 Обними Ульяну
-            </h2>
-            <p className="text-gray-600 text-lg mb-8">
-              Нажимай кнопку — каждое нажатие = одно объятие для тебя!
-            </p>
-            
-            <button
-              onClick={giveHug}
-              className="relative group"
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-pink-400 to-purple-400 rounded-full blur-xl opacity-50 group-hover:opacity-75 transition-opacity animate-pulse" />
-              <div className="relative bg-gradient-to-r from-pink-500 to-purple-500 text-white text-2xl md:text-3xl font-bold px-12 py-8 rounded-full shadow-2xl transform hover:scale-110 active:scale-95 transition-all duration-200">
-                🤗 Обнять!
-              </div>
-            </button>
-
-            {showConfetti && (
-              <div className="absolute inset-0 pointer-events-none overflow-hidden">
-                {Array.from({ length: 20 }, (_, i) => (
-                  <div
-                    key={i}
-                    className="absolute animate-confetti"
-                    style={{
-                      left: `${Math.random() * 100}%`,
-                      top: '-10%',
-                      animationDelay: `${Math.random() * 0.5}s`,
-                      fontSize: `${1 + Math.random() * 2}rem`,
-                    }}
-                  >
-                    {['💖', '✨', '🌸', '💕', '🦋', '🌟'][Math.floor(Math.random() * 6)]}
-                  </div>
-                ))}
-              </div>
-            )}
-
-            <div className="mt-8 bg-white/80 rounded-2xl p-6 shadow-lg border border-pink-100">
-              <p className="text-2xl font-bold text-pink-600">
-                Объятий отправлено: <span className="text-4xl">{hugs}</span>
-              </p>
-              {hugs > 0 && hugs < 5 && <p className="text-gray-500 mt-2">Продолжай! Ульяна чувствует каждое 💕</p>}
-              {hugs >= 5 && hugs < 10 && <p className="text-gray-500 mt-2">Ого! Сколько тепла! 🥰</p>}
-              {hugs >= 10 && hugs < 20 && <p className="text-gray-500 mt-2">Ульяна уже улыбается! 😊</p>}
-              {hugs >= 20 && <p className="text-pink-500 font-bold mt-2">ТЫ ЛУЧШАЯ! БЕСКОНЕЧНАЯ ЛЮБОВЬ! 💖✨</p>}
-            </div>
-          </div>
-        )
-
-      case 5:
         return (
           <div className="flex flex-col items-center justify-center h-full px-4 text-center">
             <span className="text-8xl animate-pulse">❤️</span>
@@ -342,26 +293,6 @@ function App() {
     >
       {/* Click hearts */}
       <ClickHearts hearts={clickHearts} />
-
-      {/* Confetti */}
-      {showConfetti && (
-        <div className="fixed inset-0 pointer-events-none z-40 overflow-hidden">
-          {Array.from({ length: 30 }, (_, i) => (
-            <div
-              key={i}
-              className="absolute animate-confetti"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: '-5%',
-                animationDelay: `${Math.random() * 1}s`,
-                fontSize: `${1 + Math.random() * 2}rem`,
-              }}
-            >
-              {['💖', '✨', '🌸', '💕', '🦋', '🌟', '💜', '🩷'][Math.floor(Math.random() * 8)]}
-            </div>
-          ))}
-        </div>
-      )}
 
       {/* Slide counter */}
       <div className="fixed top-4 right-4 z-30 bg-white/80 backdrop-blur-sm rounded-full px-4 py-2 shadow-md">
