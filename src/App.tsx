@@ -117,9 +117,6 @@ function App() {
             <h1 className="text-4xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-purple-500 to-rose-500 mt-8">
               Для моей любимой
             </h1>
-            <h2 className="text-5xl md:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-pink-600 mt-4">
-              Ульяны
-            </h2>
             <p className="text-lg md:text-xl text-gray-600 mt-6 max-w-md">
               Нажимай на экран — он наполнится любовью 💕
             </p>
@@ -323,9 +320,7 @@ function App() {
                 </span>
               ))}
             </div>
-            <p className="text-gray-400 mt-8 text-lg">
-              С бесконечной любовью, твоя любимая 💕
-            </p>
+
             <button
               onClick={() => goToSlide(0)}
               className="mt-6 px-6 py-3 bg-gradient-to-r from-pink-400 to-purple-400 text-white rounded-full font-medium hover:scale-105 transition-transform shadow-lg"
